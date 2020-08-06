@@ -1,1 +1,0 @@
-Common library for React TODO application

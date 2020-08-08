@@ -4,8 +4,6 @@ import './todo-list.sass'
 import TodoItem from 'components/todo-item/todo-item';
 
 const TodoList = ({ todos }) => {
-
-
   const todoList = todos.map((item) => {
     const { id, ...itemProps } = item; 
   

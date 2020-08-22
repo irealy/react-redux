@@ -6,11 +6,6 @@ const classNames = require('classnames');
 
 export default class TodoItem extends Component {
 
-  state = {
-    done: false,
-    important: false,
-  }
-
   onLabelClick = () => {
     this.setState(({ done }) => {
       return {
@@ -28,10 +23,8 @@ export default class TodoItem extends Component {
   }
 
   render() {
-  
-    const { label } = this.props;
 
-    const { done, important } = this.state;
+    const { label, onDeleted, onToggleDone, onToggleImportant, important, done } = this.props;
 
     const classes = classNames(
       'todo-item',
@@ -45,20 +38,24 @@ export default class TodoItem extends Component {
       <span className={classes}>
         <span
           className="todo-item-label"
-          onClick={this.onLabelClick}
+          onClick={onToggleDone}
         >
           {label}
         </span>
 
-        <button type="button"
+        <button
+          type="button"
           className="btn btn-outline-success btn-sm float-right"
-          onClick={this.onMarkImportant}
+          onClick={onToggleImportant}
         >
           <i className="fa fa-exclamation" />
         </button>
 
-        <button type="button"
-          className="btn btn-outline-danger btn-sm float-right">
+        <button
+          type="button"
+          className="btn btn-outline-danger btn-sm float-right"
+          onClick={onDeleted}
+        >
           <i className="fa fa-trash-o" />
         </button>
       </span>

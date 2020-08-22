@@ -28,9 +28,9 @@ export default class Application extends Component {
   }
 
   toggleProperty(list, id, property) {
-    const index = list.findIndex(item => item.id === id);
+    const index = list.findIndex((item) => item.id === id);
     const done = list[index][property];
-    return Object.assign([], list, list[index][property] = !done);
+    return Object.assign([], list, (list[index][property] = !done));
   }
 
   handleDeleteItem = (id) => {
@@ -56,8 +56,8 @@ export default class Application extends Component {
     this.setState(({ todoData }) => {
       const newTodos = this.toggleProperty(todoData, id, 'important');
       return {
-        todoData: newTodos
-      }
+        todoData: newTodos,
+      };
     });
   };
 
@@ -65,16 +65,15 @@ export default class Application extends Component {
     this.setState(({ todoData }) => {
       const newTodos = this.toggleProperty(todoData, id, 'done');
       return {
-        todoData: newTodos
-      }
+        todoData: newTodos,
+      };
     });
   };
-
 
   render() {
     const { todoData } = this.state;
 
-    const doneCount = todoData.filter(item => item.done).length
+    const doneCount = todoData.filter((item) => item.done).length;
     const todoCount = todoData.length - doneCount;
 
     return (

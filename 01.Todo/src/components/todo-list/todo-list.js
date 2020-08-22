@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './todo-list.sass'
+import './todo-list.sass';
 import TodoItem from 'components/todo-item/todo-item';
 
 const TodoList = ({ todos, onDeleted, onToggleDone, onToggleImportant }) => {
@@ -8,7 +8,7 @@ const TodoList = ({ todos, onDeleted, onToggleDone, onToggleImportant }) => {
     const { id, ...itemProps } = item;
 
     return (
-      <li key={id} className="list-group-item todo-list__item">
+      <li key={id} className='list-group-item todo-list__item'>
         <TodoItem
           {...itemProps}
           onDeleted={() => onDeleted(id)}
@@ -16,13 +16,9 @@ const TodoList = ({ todos, onDeleted, onToggleDone, onToggleImportant }) => {
           onToggleDone={() => onToggleDone(id)}
         />
       </li>
-    )
+    );
   });
-  return (
-    <ul className="list-group todo-list">
-      {todoList}
-    </ul>
-  )
+  return <ul className='list-group todo-list'>{todoList}</ul>;
 };
 
 export default TodoList;

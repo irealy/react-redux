@@ -6,6 +6,8 @@ import TodoList from 'components/todo-list/todo-list';
 import ItemStatusFilter from 'components/item-status-filter/item-status-filter';
 import AddItemForm from 'components/add-item-form/add-item-form';
 
+import { MODES } from 'components/application/application.constants';
+
 import './application.sass';
 
 export default class Application extends Component {
@@ -15,6 +17,8 @@ export default class Application extends Component {
       this.createTodoItem('Eat myaso'),
       this.createTodoItem('sleep every day'),
     ],
+    searchValue: '',
+    mode: MODES.all, // all | active | done
   };
 
   createTodoItem(label) {
@@ -70,8 +74,42 @@ export default class Application extends Component {
     });
   };
 
+  handleOnChangeSearch = (value) => {
+    this.setState({ searchValue: value });
+  };
+
+  search(items, value) {
+    if (!value.length) return items;
+
+    return items.filter((item) => {
+      const label = item.label.toLowerCase();
+      const lowerValue = value.toLowerCase();
+
+      return label.indexOf(lowerValue) > -1;
+    });
+  }
+
+  changeMode(items, mode) {
+    const modeRules = {
+      [MODES.all]: items,
+      [MODES.active]: items.filter((item) => !item.done),
+      [MODES.done]: items.filter((item) => item.done),
+    };
+
+    return modeRules[mode];
+  }
+
+  handleOnModeClick = (mode) => {
+    this.setState({ mode });
+  };
+
   render() {
-    const { todoData } = this.state;
+    const { todoData, searchValue, mode } = this.state;
+
+    const filteredItems = this.changeMode(
+      this.search(todoData, searchValue),
+      mode
+    );
 
     const doneCount = todoData.filter((item) => item.done).length;
     const todoCount = todoData.length - doneCount;
@@ -80,11 +118,11 @@ export default class Application extends Component {
       <div className='todo-app'>
         <Header todo={todoCount} done={doneCount} />
         <div className='todo-panel d-flex'>
-          <SearchField />
-          <ItemStatusFilter />
+          <SearchField onChange={this.handleOnChangeSearch} />
+          <ItemStatusFilter mode={mode} onModeClick={this.handleOnModeClick} />
         </div>
         <TodoList
-          todos={this.state.todoData}
+          todos={filteredItems}
           onDeleted={this.handleDeleteItem}
           onToggleImportant={this.handleToggleImportant}
           onToggleDone={this.handleToggleDone}

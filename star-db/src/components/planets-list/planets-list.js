@@ -5,7 +5,7 @@ import ErrorIndicator from 'components/error-indicator/error-indicator';
 import SwapiService from 'services/swapi-service';
 import InfoTable from 'components/info-table/info-table';
 
-export default class PeoplePage extends Component {
+export default class PlanetsList extends Component {
   swapiService = new SwapiService();
 
   state = {
@@ -22,13 +22,13 @@ export default class PeoplePage extends Component {
   };
 
   render() {
-    const { selectedPerson, error } = this.state;
+    const { error, selectedPerson } = this.state;
 
     const list = (
       <ItemList
         onSelectedItem={this.handleOnPersonSelected}
         getData={this.swapiService.getAllPeople}
-        renderLabel={renderLabel}
+        renderLabel={(item) => item.name}
       />
     );
 
@@ -42,11 +42,3 @@ export default class PeoplePage extends Component {
     );
   }
 }
-
-const renderLabel = ({ name, gender, birthYear }) => {
-  return (
-    <div>
-      {name} (<i>{gender}</i>, <b>{birthYear}</b>)
-    </div>
-  );
-};

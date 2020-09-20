@@ -8,27 +8,32 @@ export default class ItemList extends Component {
   swapiService = new SwapiService();
 
   state = {
-    peopleList: null,
+    list: null,
   };
 
   componentDidMount() {
-    this.swapiService
-      .getAllPeople()
-      .then((peopleList) => {
-        this.setState({ peopleList })
+
+    const { getData } = this.props;
+
+    getData()
+      .then((list) => {
+        this.setState({ list })
       });
   }
 
   renderList(array) {
+    const { renderLabel, onSelectedItem } = this.props;
     if (array) {
-      return array.map(({ id, name }) => {
+      return array.map((item) => {
+        const id = item.id;
+        const label = renderLabel(item);
         return (
           <li
             className='list-group-item'
             key={id}
-            onClick={() => this.props.onSelectedItem(id)}
+            onClick={() => onSelectedItem(id)}
           >
-            {name}
+            {label}
           </li>
         );
       });
@@ -36,8 +41,8 @@ export default class ItemList extends Component {
   }
 
   render() {
-    const { peopleList } = this.state;
-    const items = this.renderList(peopleList);
+    const { list } = this.state;
+    const items = this.renderList(list);
 
     return (
       <>

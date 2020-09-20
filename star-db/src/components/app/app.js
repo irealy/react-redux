@@ -6,8 +6,13 @@ import RandomPlanet from 'components/random-planet/random-planet';
 import ErrorButton from 'components/error-button/error-button';
 import ErrorIndicator from 'components/error-indicator/error-indicator';
 import PeoplePage from 'components/people-page/people-page';
+import SwapiService from 'services/swapi-service';
+import PlanetsList from 'components/planets-list/planets-list';
 
 export default class App extends Component {
+
+  swapiService = new SwapiService();
+
   state = {
     randomPlanet: Math.floor(Math.random() * 20),
     hasError: false,
@@ -29,8 +34,7 @@ export default class App extends Component {
       <div>
         <Header />
         <RandomPlanet id={randomPlanet}/>
-        <ErrorButton />
-        <PeoplePage/>
+        <PeoplePage />
 
       </div>
     );

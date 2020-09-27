@@ -22,11 +22,11 @@ export default class ItemList extends Component {
   }
 
   renderList(array) {
-    const { renderLabel, onSelectedItem } = this.props;
+    const { children, onSelectedItem } = this.props;
     if (array) {
       return array.map((item) => {
         const id = item.id;
-        const label = renderLabel(item);
+        const label = children(item);
         return (
           <li
             className='list-group-item'

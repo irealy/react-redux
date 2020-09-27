@@ -1,21 +1,17 @@
 import React, { Component } from 'react';
 import ItemList from 'components/item-list/item-list';
-import PersonDetails from 'components/person-details/person-details';
-import ErrorIndicator from 'components/error-indicator/error-indicator';
+import ItemDetails from 'components/item-details/item-details';
 import SwapiService from 'services/swapi-service';
 import InfoTable from 'components/info-table/info-table';
+import ErrorBoundry from 'components/error-boundry/error-boundry';
+import ErrorButton from 'components/error-button/error-button';
 
 export default class PlanetsList extends Component {
   swapiService = new SwapiService();
 
   state = {
     selectedPerson: 3,
-    error: false,
   };
-
-  componentDidCatch() {
-    this.setState({ error: true });
-  }
 
   handleOnPersonSelected = (id) => {
     this.setState({ selectedPerson: id });
@@ -28,16 +24,18 @@ export default class PlanetsList extends Component {
       <ItemList
         onSelectedItem={this.handleOnPersonSelected}
         getData={this.swapiService.getAllPeople}
-        renderLabel={(item) => item.name}
-      />
+      >
+        {(item) => item.name}
+      </ItemList>
     );
 
-    const details = <PersonDetails personId={selectedPerson} />;
+    const details = <ItemDetails personId={selectedPerson} />;
 
     return (
       <>
-        {error && <ErrorIndicator />}
-        {!error && <InfoTable list={list} details={details} />}
+        <ErrorBoundry>
+          <InfoTable list={list} details={details} />
+        </ErrorBoundry>
       </>
     );
   }

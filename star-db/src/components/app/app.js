@@ -6,6 +6,7 @@ import ErrorIndicator from 'components/error-indicator/error-indicator';
 import SwapiService from 'services/swapi-service';
 import InfoTable from 'components/info-table/info-table';
 import ItemDetails, { Record } from 'components/item-details/item-details';
+import ItemList from 'components/item-list/item-list';
 
 export default class App extends Component {
   swapiService = new SwapiService();
